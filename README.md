@@ -22,7 +22,15 @@ npm install
 ```
 ### 修改 secret.json
 
-修改 `secret.json`, 带上你的 `sessionToken`
+修改 `secret.json`, 带上你的 `sessionToken`。
+
+1. 前往 <https://chat.openai.com/chat> 并登陆。
+ ![image](./docs/homepage.png)
+1. 按下 F12 打开开发者工具.
+2. 点击 Application 选项卡 > Cookies.
+   ![image](./docs/get_token.png)
+3. 复制 \_\_Secure-next-auth.session-token 的值，并且以如下方式配置到您的项目中：
+
 ```json
 {
   "authorization": "Bearer exxxxx"

@@ -1,6 +1,6 @@
-import { requestChatGPTApi } from "./service";
+import { requestChatGPTAccessTokenApi, requestChatGPTConversationApi } from "./service";
 
-interface ChatGPTInitParams {
+type ChatGPTInitParams = {
   authorization: string;
 }
 
@@ -9,13 +9,22 @@ class ChatGPT {
   authorization: string = '';
   
   init(params: ChatGPTInitParams) {
-    const { authorization } = params;
-    this.authorization = authorization;
+    this.authorization = params.authorization;
   }
 
   async getChatGPTAnswer(question: string): Promise<string> {
-    const { answer } = await requestChatGPTApi(question, this.authorization);
+    let { answer, error } = await requestChatGPTConversationApi(question, this.authorization);
+
+    if (error) {
+      await this.refreshAuthorization();
+    }
+    answer = (await requestChatGPTConversationApi(question, this.authorization)).answer
     return answer;
+  }
+
+  async refreshAuthorization() {
+    const newAuthorization = await requestChatGPTAccessTokenApi(this.authorization);
+    this.authorization = newAuthorization;
   }
 }
 

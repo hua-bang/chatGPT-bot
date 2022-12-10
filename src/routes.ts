@@ -1,9 +1,9 @@
-import homeController from './controller/home-controller';
+import ChatBotController from './controller/chat-bot-controller';
 
 export default [
   {
-    path: '/',
-    method: 'get',
-    action: homeController.hello
+    path: '/bot/chat',
+    method: 'post',
+    action: ChatBotController.chat
   }
 ];

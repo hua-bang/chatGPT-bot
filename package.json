@@ -7,6 +7,7 @@
     "typescript",
     "koa"
   ],
+  "type": "module",
   "scripts": {
     "start": "nodemon",
     "build": "rm -rf dist && tsc",
@@ -16,12 +17,14 @@
   },
   "dependencies": {
     "axios": "^1.2.1",
+    "chatgpt": "^4.2.0",
     "dotenv": "^8.2.0",
     "execa": "^5.1.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",

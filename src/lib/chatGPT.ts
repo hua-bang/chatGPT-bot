@@ -1,33 +1,42 @@
-import { requestChatGPTAccessTokenApi, requestChatGPTConversationApi } from "./service";
-
-type ChatGPTInitParams = {
-  authorization: string;
+interface InitChatGPTParams {
+  apiKey: string;
+  errorResponseText?: string;
 }
 
-class ChatGPT {
+const DefaultErrorResponseText = '机器人出错啦，稍后再试哈。';
 
-  authorization: string = '';
+class ChatGPTBot {
+
+  private apiInstance: any;
+
+  initParams: InitChatGPTParams | null = null;
   
-  init(params: ChatGPTInitParams) {
-    this.authorization = params.authorization;
-  }
+  async init(params: InitChatGPTParams) {
+    const { apiKey } = params;
 
-  async getChatGPTAnswer(question: string): Promise<string> {
-    let { answer, error } = await requestChatGPTConversationApi(question, this.authorization);
-
-    if (error) {
-      await this.refreshAuthorization();
+    if (!(globalThis as any).fetch) {
+      const fetch = (await import('node-fetch')).default;
+      (globalThis as any).fetch = fetch;  
     }
-    answer = (await requestChatGPTConversationApi(question, this.authorization)).answer
-    return answer;
+
+    const ChatGPTAPI = (await import('chatgpt')).ChatGPTAPI;   
+    this.apiInstance = new ChatGPTAPI({
+      apiKey
+    });
+    this.initParams = params;
   }
 
-  async refreshAuthorization() {
-    const newAuthorization = await requestChatGPTAccessTokenApi(this.authorization);
-    this.authorization = newAuthorization;
+  async getChatGPTAnswer(question: string) {
+    try {
+      const res = await this.apiInstance?.sendMessage(question);
+      return res?.text;
+    } catch(err) {
+      const { errorResponseText = DefaultErrorResponseText } = this.initParams || {};
+      return errorResponseText;
+    }
   }
 }
 
-const chatGPTInstance = new ChatGPT();
+const chatGPTInstance = new ChatGPTBot();
 
 export default chatGPTInstance;

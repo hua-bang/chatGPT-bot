@@ -1,16 +1,6 @@
-import * as fs from 'fs';
 import chatGPTInstance from '../lib/chatGPT';
-import * as path from 'path';
 
-function getValueFromSecretByKey(key: string) {
-  const content = fs.readFileSync("./secret.json", {
-    encoding: 'utf-8'
-  });
-  const record = JSON.parse(content) || {};
-  return record[key];
-}
-
-export default class ChatBotService {
+export class ChatBotService {
   private chatGPT = chatGPTInstance;
 
   constructor() {
@@ -18,9 +8,9 @@ export default class ChatBotService {
   }
 
   initChatGPT() {
-    const authorization = getValueFromSecretByKey('authorization');
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     this.chatGPT.init({
-      authorization
+      apiKey: OPENAI_API_KEY,
     });
   }
 
@@ -28,3 +18,5 @@ export default class ChatBotService {
     return this.chatGPT.getChatGPTAnswer(question);
   }
 }
+
+export default new ChatBotService();

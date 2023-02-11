@@ -1,15 +1,6 @@
-import * as fs from 'fs';
 import chatGPTInstance from '../lib/chatGPT';
 
-function getValueFromSecretByKey(key: string) {
-  const content = fs.readFileSync("./secret.json", {
-    encoding: 'utf-8'
-  });
-  const record = JSON.parse(content) || {};
-  return record[key];
-}
-
-export default class ChatBotService {
+export class ChatBotService {
   private chatGPT = chatGPTInstance;
 
   constructor() {
@@ -27,3 +18,5 @@ export default class ChatBotService {
     return this.chatGPT.getChatGPTAnswer(question);
   }
 }
+
+export default new ChatBotService();

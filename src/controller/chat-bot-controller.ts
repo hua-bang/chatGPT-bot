@@ -1,7 +1,7 @@
-import ChatBotService from '../service/chat-bot-service';
+import chatBotService, { ChatBotService } from '../service/chat-bot-service';
 
 class ChatBotController {
-  private chatBotService: ChatBotService = new ChatBotService();
+  private chatBotService: ChatBotService = chatBotService;
 
   chat = async ctx => {
     const { question } = ctx.request.body;

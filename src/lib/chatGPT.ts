@@ -1,3 +1,5 @@
+import type { ChatGPTAPI } from 'chatgpt';
+
 interface InitChatGPTParams {
   apiKey: string;
   errorResponseText?: string;
@@ -7,7 +9,7 @@ const DefaultErrorResponseText = '机器人出错啦，稍后再试哈。';
 
 class ChatGPTBot {
 
-  private apiInstance: any;
+  private apiInstance: ChatGPTAPI | null = null;
 
   initParams: InitChatGPTParams | null = null;
   

@@ -1,11 +1,19 @@
 # ChatGPT-BOT
 
+> 如果你觉得这个项目还还行，可以留下 **star** 或 **fork**, 不胜感激。
+
 ChatGPT-BOT 是通过调用 `chatGPT` 开放的 [completions](https://platform.openai.com/docs/api-reference/completions) 接口的从而实现的小 `demo`。
 
 ## 目前功能
 
 - 通过 `OPENAI_API_KEY` 进行 初始化 `chatGPT` 机器人。
 - 微信公众号文字信息回复接入。
+
+## 问题和可优化点
+
+目前存在两个可优化点。
+-  **`ChatGPT`** 聊天服务：目前会话间是独立的，上下文不关联，后续进行支持。
+-  **微信公众号回复不灵敏**：目前采用的回复方式是[被动回复](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/development/weixin/callback.html)，而非[主动回复](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/development/weixin/callback.html#%E4%BA%8C%E3%80%81%E4%B8%BB%E5%8A%A8%E5%9B%9E%E5%A4%8D)。被动回复，有时间的限制(5s 内),又加上 `ChatGPT` 接口返回时长长，所以可能会导致来回复不灵敏的情况，替换成**主动回复**应该效果会好点。
 
 ## 如何使用
 

@@ -9,7 +9,7 @@ ChatGPT-BOT 是通过模拟请求调用 `chatGPT` 接口的小 `demo`。
 
 ## 目前功能
 
-- 通过 session_token 进行 初始化 `chatGPT`
+- 通过 OPENAI_API_KEY 进行 初始化 `chatGPT`
 - `chatGPT` 聊天
 
 ## 如何使用
@@ -20,22 +20,17 @@ ChatGPT-BOT 是通过模拟请求调用 `chatGPT` 接口的小 `demo`。
 ```bash
 npm install
 ```
-### 修改 secret.json
+### 修改 env 下的 OPENAI_API_KEY
 
-修改 `secret.json`, 带上你的 `sessionToken`。
+修改 `env`, 带上你的 `OPENAI_API_KEY`。
 
-1. 前往 <https://chat.openai.com/chat> 并登陆。
+1. 前往 <https://platform.openai.com/account/api-keys> 并登陆。
  ![image](./docs/homepage.png)
-1. 按下 F12 打开开发者工具.
-2. 点击 Application 选项卡 > Cookies.
-   ![image](./docs/get_token.png)
-3. 复制 \_\_Secure-next-auth.session-token 的值，并且以如下方式配置到您的项目中：
 
-```json
-{
-  "authorization": "Bearer exxxxx"
-}
+1. 复制 得到的值  ![image](./docs/get_token.png)，并且以如下方式配置到您的项目中：
 
+```txt
+OPENAI_API_KEY=xxxxx
 ```
 
 ### 运行程序
@@ -53,10 +48,8 @@ curl --location --request POST 'http://localhost:3000/bot/chat' \
 }'
 ```
 
-## 未来 TODO
-- `chatGPT`  刷新 token
-- 通过 用户名，密码 初始化 `chatGPT`
-
+## 参考
+- [Github-chatgpt-api](https://github.com/transitive-bullshit/chatgpt-api)
 
 
 
